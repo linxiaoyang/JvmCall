@@ -14,4 +14,15 @@ public class HelloController {
     public String hello(){
         return "hello world";
     }
+
+    /**
+     * 一个无限循环，测试占用CPU资源的case
+     * @return
+     */
+    @RequestMapping(value = "/1",method = RequestMethod.GET)
+    public String test1(){
+        while (true){
+
+        }
+    }
 }

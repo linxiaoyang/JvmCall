@@ -14,6 +14,7 @@
 
     <properties>
         <java.version>1.8</java.version>
+        <projectID>1</projectID>
     </properties>
 
     <dependencies>
@@ -30,7 +31,7 @@
 
 
     <build>
-        <finalName>spring-boot-docker-start</finalName>
+        <finalName>jvm-call-start</finalName>
         <plugins>
 
             <plugin>
@@ -55,22 +56,13 @@
                 <artifactId>docker-maven-plugin</artifactId>
                 <version>0.4.12</version>
                 <configuration>
-                    <!-- 注意imageName一定要是符合正则[a-z0-9-_.]的，否则构建不会成功 -->
-                    <!-- 详见：https://github.com/spotify/docker-maven-plugin    Invalid repository name ... only [a-z0-9-_.] are allowed-->
-                    <imageName>spring-boot-docker-start</imageName>
-                    <!--相当于from java,本地有使用本地的镜像，没有的话从远程仓库拉取-->
-                    <baseImage>java</baseImage>
-                    <exposes>
-                        <!--暴露容器内的8080端口-->
-                        <expose>8080</expose>
-                    </exposes>
-                    <!--进入点，执行的命令-->
-                    <entryPoint>["java", "-jar", "/${project.build.finalName}.jar"]</entryPoint>
+                    <dockerDirectory>src/main/docker/${projectID}</dockerDirectory>
+                    <imageName>jvm-call-start:${projectID}</imageName>
                     <resources>
                         <resource>
                             <targetPath>/</targetPath>
                             <directory>${project.build.directory}</directory>
-                            <include>${project.build.finalName}.jar</include>
+                            <include>jvm-call-start.jar</include>
                         </resource>
                     </resources>
                 </configuration>
